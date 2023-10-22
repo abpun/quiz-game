@@ -2,8 +2,11 @@ const Question = require("../models/Question");
 
 exports.questions = async (req, res) => {
     try {
-        const allQuestion = await Question.find();
-        res.json(allQuestion);
+        const sampleSize = 5;
+        const randomQuestions = await Question.aggregate([
+            { $sample: { size: sampleSize } },
+        ]);
+        res.json(randomQuestions);
     } catch (error) {
         console.log(error);
     }

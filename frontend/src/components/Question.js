@@ -15,8 +15,12 @@ export default function Question({
 
     useEffect(() => {
         const questions = response.map((item) => {
+            const question = item.question;
+            const questionWithNewLines = question.replace(/\n/g, "<br />");
+            console.log(questionWithNewLines);
+
             const formattedQuestion = {
-                question: item.question,
+                question: questionWithNewLines,
             };
 
             let answerChoices = [...item.incorrect_answers];
@@ -65,7 +69,7 @@ export default function Question({
     return (
         <>
             <Typography
-                variant="h3"
+                variant={currentQuestion?.question?.length > 150 ? "h4" : "h3"}
                 sx={{ fontWeight: "bold", color: "#444", mt: 2 }}
             >
                 {currentQuestion?.question}
