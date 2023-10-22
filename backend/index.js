@@ -12,9 +12,7 @@ mongoose
 const app = express();
 
 const corsOptions = {
-    origin: "*", // Allow requests from any domain
-    // methods: ['GET', 'POST', 'PUT', 'DELETE'], // Specify the HTTP methods you want to support
-    // allowedHeaders: ['Content-Type', 'Authorization'], // Define the headers you want to allow
+    origin: "*",
 };
 
 app.use(cors(corsOptions));
