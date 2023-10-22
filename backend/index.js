@@ -11,7 +11,14 @@ mongoose
 
 const app = express();
 
-app.use(cors({ origin: "http://localhost:3000" }));
+const corsOptions = {
+    origin: "*", // Allow requests from any domain
+    // methods: ['GET', 'POST', 'PUT', 'DELETE'], // Specify the HTTP methods you want to support
+    // allowedHeaders: ['Content-Type', 'Authorization'], // Define the headers you want to allow
+};
+
+app.use(cors(corsOptions));
+
 app.use(bodyparser.urlencoded({ extended: false }));
 app.use(bodyparser.json());
 
