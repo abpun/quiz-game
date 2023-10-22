@@ -7,7 +7,7 @@ export default function Container({ children }) {
             component="div"
             sx={{
                 width: "1000px",
-                margin: "2rem auto",
+                margin: "0 auto",
             }}
         >
             {children}
