@@ -45,6 +45,18 @@ export default function Home() {
                         fontSize: "16px",
                     }}
                 >
+                    Difficulty
+                </Button>
+                <Button
+                    variant="outlined"
+                    sx={{
+                        mb: 1,
+                        width: "180px",
+                        background: "#fff",
+                        color: "#2196f3",
+                        fontSize: "16px",
+                    }}
+                >
                     High Scores
                 </Button>
             </PageCenter>
