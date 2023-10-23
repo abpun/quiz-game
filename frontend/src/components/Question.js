@@ -59,6 +59,8 @@ export default function Question({
         }, 1000);
     };
 
+    console.log(questionIndex, totalQuestion);
+
     if (questionIndex === totalQuestion)
         return (
             <Typography variant="h2" sx={{ textAlign: "center", mt: 4 }}>
