@@ -39,7 +39,14 @@ const Question = ({
         <>
             <Typography
                 variant={currentQuestion?.question?.length > 150 ? "h4" : "h3"}
-                sx={{ fontWeight: "bold", color: "#444", mt: 2 }}
+                sx={{
+                    fontWeight: "bold",
+                    color: "#444",
+                    mt: 2,
+                    "@media (max-width: 600px)": {
+                        fontSize: 30,
+                    },
+                }}
             >
                 {currentQuestion?.question}
             </Typography>

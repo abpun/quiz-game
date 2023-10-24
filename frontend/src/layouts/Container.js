@@ -8,7 +8,7 @@ export default function Container({ children }) {
             sx={{
                 maxWidth: "100%",
                 padding: "0 16px",
-                margin: "0 auto",
+                margin: "24px auto",
                 "@media (min-width: 600px)": {
                     maxWidth: "600px",
                 },
