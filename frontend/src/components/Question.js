@@ -36,7 +36,7 @@ const Question = ({
     if (questionIndex >= totalQuestion) navigate("/gameover");
 
     return (
-        <Box>
+        <>
             <Typography
                 variant={currentQuestion?.question?.length > 150 ? "h4" : "h3"}
                 sx={{
@@ -69,6 +69,9 @@ const Question = ({
                             background: "#2196f3",
                             color: "white",
                             padding: "16px 24px",
+                            display: "flex",
+                            flexDirection: "column",
+                            justifyContent: "center",
                         }}
                     >
                         {index + 1}
@@ -93,7 +96,7 @@ const Question = ({
                     </Typography>
                 </Box>
             ))}
-        </Box>
+        </>
     );
 };
 

@@ -10,6 +10,10 @@ export default function PageCenter({ children }) {
                 flexDirection: "column",
                 justifyContent: "center",
                 alignItems: "center",
+                height: "100vh",
+                "@media (max-width: 600px)": {
+                    height: "auto",
+                },
             }}
         >
             {children}
