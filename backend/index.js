@@ -13,6 +13,7 @@ const app = express();
 
 const corsOptions = {
     origin: ["https://gamedigi.vercel.app", "http://localhost:3000", "*"],
+    methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
 };
 
 app.use(cors(corsOptions));

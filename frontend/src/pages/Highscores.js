@@ -6,7 +6,7 @@ import http from "../config/http";
 import HighScoreTable from "../components/HighScoreTable";
 
 export default function Highscores() {
-    const [loading, setLoading] = useState(false);
+    const [, setLoading] = useState(false);
     const [data, setData] = useState([]);
 
     const navigate = useNavigate();
