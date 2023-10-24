@@ -13,7 +13,7 @@ export default function Highscores() {
 
     useEffect(() => {
         setLoading(true);
-        http.post("/api/highscores")
+        http.get("/api/highscores")
             .then((res) => {
                 setData(res.data);
                 setLoading(false);

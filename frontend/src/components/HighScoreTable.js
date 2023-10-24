@@ -5,8 +5,8 @@ import {
     TableCell,
     TableContainer,
     TableHead,
-    TablePagination,
     TableRow,
+    Typography,
 } from "@mui/material";
 import { highscoresColumns as columns } from "../config/columns";
 
@@ -34,7 +34,10 @@ export default function HighScoreTable({ data }) {
                     </TableHead>
 
                     <TableBody>
-                        {data.map((item) => (
+                        {!data && data.length && (
+                            <Typography variant="h3">No scores</Typography>
+                        )}
+                        {data?.map((item) => (
                             <TableRow
                                 key={item._id}
                                 sx={{
