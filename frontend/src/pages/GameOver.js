@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate, useLocation } from "react-router-dom";
 import { Button, FormControl, TextField, Typography } from "@mui/material";
@@ -8,14 +8,17 @@ import http from "../config/http";
 export default function GameOver() {
     const navigate = useNavigate();
     const location = useLocation();
-    const score = location.state && location.state.score;
+    const [disabled, setDisabled] = useState(false);
+    let score = location.state && location.state.score;
 
     const form = useForm();
     const { register, handleSubmit } = form;
 
     const onSubmit = (data) => {
+        setDisabled(true);
+        if (score === null) score = 0;
         data = { ...data, score };
-        console.log(data);
+
         http.post("/api/highscore", data)
             .then((response) => {
                 if (response.status === 200) {
@@ -76,6 +79,7 @@ export default function GameOver() {
                         fontSize: "16px",
                     }}
                     type="submit"
+                    disabled={disabled}
                 >
                     Save
                 </Button>

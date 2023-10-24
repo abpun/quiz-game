@@ -14,7 +14,12 @@ export default function HighScoreTable({ data }) {
     return (
         <>
             <TableContainer
-                sx={{ maxHeight: 200, minHeight: 200, width: "300px" }}
+                sx={{
+                    maxHeight: 260,
+                    width: "300px",
+                    background: "#fff",
+                    border: "1px solid #efefef",
+                }}
             >
                 <Table stickyHeader>
                     <TableHead>
@@ -25,6 +30,8 @@ export default function HighScoreTable({ data }) {
                                     sx={{
                                         padding: 1.2,
                                         fontWeight: "600",
+                                        background: "#2196f3",
+                                        color: "#fff",
                                     }}
                                 >
                                     {column.label}
@@ -36,7 +43,10 @@ export default function HighScoreTable({ data }) {
                     <TableBody>
                         {!data || data.length === 0 ? (
                             <TableRow sx={{ height: 100 }}>
-                                <TableCell colSpan={3}>
+                                <TableCell
+                                    colSpan={3}
+                                    sx={{ background: "#fff" }}
+                                >
                                     <Typography
                                         variant="h5"
                                         sx={{ textAlign: "center" }}
@@ -46,7 +56,7 @@ export default function HighScoreTable({ data }) {
                                 </TableCell>
                             </TableRow>
                         ) : (
-                            data?.map((item) => (
+                            data?.map((item, key) => (
                                 <TableRow
                                     key={item._id}
                                     sx={{
@@ -63,7 +73,9 @@ export default function HighScoreTable({ data }) {
                                                 padding: 1.2,
                                             }}
                                         >
-                                            {item[column.field]}
+                                            {column.field === "_id"
+                                                ? key + 1
+                                                : item[column.field]}
                                         </TableCell>
                                     ))}
                                 </TableRow>

@@ -42,7 +42,7 @@ export default function Highscores() {
             <Button
                 variant="outlined"
                 sx={{
-                    mb: 1,
+                    mt: 2,
                     width: "180px",
                     background: "#fff",
                     color: "#2196f3",

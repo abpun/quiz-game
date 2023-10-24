@@ -2,10 +2,10 @@ const Highscore = require("../models/Highscore");
 
 exports.fetchAll = async (req, res) => {
     try {
-        const sampleSize = 5;
-        const highscores = await Highscore.aggregate([
-            { $sample: { size: sampleSize } },
-        ]);
+        const size = 5;
+        const highscores = await Highscore.find()
+            .sort({ score: -1 })
+            .limit(size);
         res.json(highscores);
     } catch (error) {
         console.log(error);
@@ -15,7 +15,7 @@ exports.fetchAll = async (req, res) => {
 exports.addScore = async (req, res) => {
     const { name, score } = req.body;
     try {
-        const newScore = new Model({
+        const newScore = new Highscore({
             name: name,
             score: score,
         });
