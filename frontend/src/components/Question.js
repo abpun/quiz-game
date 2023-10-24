@@ -1,72 +1,39 @@
-import React, { useState } from "react";
+import React, { useState, useCallback, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { Box, Typography } from "@mui/material";
-import { useEffect } from "react";
 
-export default function Question({
-    response,
+const Question = ({
     setScore,
     questionIndex,
     setQuestionIndex,
     totalQuestion,
-}) {
+    availableQuestions,
+}) => {
+    const navigate = useNavigate();
     const [currentQuestion, setCurrentQuestion] = useState({});
-    const [availableQuestions, setAvailableQuestions] = useState([]);
     const [userChoice, setUserChoice] = useState(null);
 
     useEffect(() => {
-        const questions = response.map((item) => {
-            const question = item.question;
-            const questionWithNewLines = question.replace(/\n/g, "<br />");
-            console.log(questionWithNewLines);
-
-            const formattedQuestion = {
-                question: questionWithNewLines,
-            };
-
-            let answerChoices = [...item.incorrect_answers];
-            formattedQuestion.answer = Math.floor(Math.random() * 3);
-
-            answerChoices.splice(
-                formattedQuestion.answer,
-                0,
-                item.correct_answer
-            );
-
-            formattedQuestion.choices = answerChoices;
-
-            return formattedQuestion;
-        });
-        setAvailableQuestions(questions);
-    }, [response]);
-
-    useEffect(() => {
         setCurrentQuestion(availableQuestions[questionIndex]);
-    }, [availableQuestions, questionIndex]);
+    }, [questionIndex, availableQuestions]);
 
-    const handleSubmit = (key) => {
-        setUserChoice(key);
-        if (key === currentQuestion.answer) {
-            console.log("Correct");
-            setScore((prev) => prev + 10);
-        } else {
-            console.log("Incorrect");
-        }
+    const handleAnswerClick = useCallback(
+        (index) => {
+            setUserChoice(index);
 
-        setTimeout(() => {
-            if (questionIndex < totalQuestion - 1)
+            if (index === currentQuestion.answer) {
+                setScore((prev) => prev + 10);
+            }
+
+            setTimeout(() => {
                 setQuestionIndex((prevValue) => prevValue + 1);
-            setUserChoice(null);
-        }, 1000);
-    };
+                setUserChoice(null);
+            }, 1000);
+        },
+        [currentQuestion, setQuestionIndex, setScore]
+    );
 
-    console.log(questionIndex, totalQuestion);
-
-    if (questionIndex === totalQuestion)
-        return (
-            <Typography variant="h2" sx={{ textAlign: "center", mt: 4 }}>
-                Game Over
-            </Typography>
-        );
+    if (questionIndex >= totalQuestion) navigate("/gameover");
 
     return (
         <>
@@ -76,51 +43,52 @@ export default function Question({
             >
                 {currentQuestion?.question}
             </Typography>
-            {currentQuestion &&
-                currentQuestion.choices &&
-                currentQuestion?.choices.map((choice, index) => (
-                    <Box
-                        key={index}
-                        component="div"
+            {currentQuestion?.choices?.map((choice, index) => (
+                <Box
+                    key={index}
+                    component="div"
+                    sx={{
+                        display: "flex",
+                        mt: 2,
+                        "&:hover": {
+                            cursor: "pointer",
+                        },
+                    }}
+                    onClick={() => handleAnswerClick(index)}
+                >
+                    <Typography
+                        variant="body1"
                         sx={{
-                            display: "flex",
-                            mt: 2,
-                            "&:hover": {
-                                cursor: "pointer",
-                            },
+                            background: "#2196f3",
+                            color: "white",
+                            padding: "16px 24px",
                         }}
-                        onClick={(event) => handleSubmit(index)}
                     >
-                        <Typography
-                            variant="body1"
-                            sx={{
-                                background: "#2196f3",
-                                color: "white",
-                                padding: "16px 24px",
-                            }}
-                        >
-                            {index + 1}
-                        </Typography>
-                        <Typography
-                            variant="body1"
-                            sx={{
-                                boxSizing: "border-box",
-                                width: "100%",
-                                color: userChoice === index ? "#fff" : "#444",
-                                background:
-                                    userChoice === index
-                                        ? userChoice === currentQuestion.answer
-                                            ? "#4caf50"
-                                            : "#f50057"
-                                        : "white",
-                                border: "1px solid #2196f3",
-                                padding: "16px 24px",
-                            }}
-                        >
-                            {choice}
-                        </Typography>
-                    </Box>
-                ))}
+                        {index + 1}
+                    </Typography>
+                    <Typography
+                        variant="body1"
+                        sx={{
+                            boxSizing: "border-box",
+                            width: "100%",
+                            color: userChoice === index ? "#fff" : "#444",
+                            background:
+                                userChoice === index
+                                    ? userChoice === currentQuestion.answer
+                                        ? "#4caf50"
+                                        : "#f50057"
+                                    : "white",
+                            border: "1px solid #2196f3",
+                            padding: "16px 24px",
+                        }}
+                    >
+                        {choice}
+                    </Typography>
+                </Box>
+            ))}
         </>
     );
-}
+};
+
+const MemoizedQuestion = React.memo(Question);
+export default MemoizedQuestion;
