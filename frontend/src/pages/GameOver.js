@@ -1,10 +1,31 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
-import { Button, TextField, Typography } from "@mui/material";
+import { useForm } from "react-hook-form";
+import { useNavigate, useLocation } from "react-router-dom";
+import { Button, FormControl, TextField, Typography } from "@mui/material";
 import VerticalCenter from "../layouts/VerticalCenter";
+import http from "../config/http";
 
 export default function GameOver() {
     const navigate = useNavigate();
+    const location = useLocation();
+    const score = location.state && location.state.score;
+
+    const form = useForm();
+    const { register, handleSubmit } = form;
+
+    const onSubmit = (data) => {
+        data = { ...data, score };
+        console.log(data);
+        http.post("/api/highscore", data)
+            .then((response) => {
+                if (response.status === 200) {
+                    console.log("Score updated");
+                }
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    };
 
     return (
         <VerticalCenter>
@@ -17,45 +38,48 @@ export default function GameOver() {
                     mb: 4,
                 }}
             >
-                Score
+                Score: {score}
             </Typography>
-            <TextField
-                size="small"
-                label="username"
-                variant="outlined"
-                sx={{
-                    width: "180px",
-                    mb: 1,
-                    background: "#fff",
-                    "& .MuiOutlinedInput-root": {
-                        "& fieldset": {
-                            border: "none",
-                            borderBottom: "3px solid #2196f3",
+            <FormControl component="form" onSubmit={handleSubmit(onSubmit)}>
+                <TextField
+                    size="small"
+                    label="username"
+                    variant="outlined"
+                    {...register("name")}
+                    sx={{
+                        width: "180px",
+                        mb: 1,
+                        background: "#fff",
+                        "& .MuiOutlinedInput-root": {
+                            "& fieldset": {
+                                border: "none",
+                                borderBottom: "3px solid #2196f3",
+                            },
+                            "&:hover fieldset": {
+                                border: "none",
+                                borderBottom: "3px solid #2196f3",
+                            },
+                            "&.Mui-focused fieldset": {
+                                border: "1px solid #2196f3",
+                                borderBottom: "3px solid #2196f3",
+                            },
                         },
-                        "&:hover fieldset": {
-                            border: "none",
-                            borderBottom: "3px solid #2196f3",
-                        },
-                        "&.Mui-focused fieldset": {
-                            border: "1px solid #2196f3",
-                            borderBottom: "3px solid #2196f3",
-                        },
-                    },
-                }}
-            />
-            <Button
-                variant="outlined"
-                sx={{
-                    mb: 1,
-                    width: "180px",
-                    background: "#fff",
-                    color: "#2196f3",
-                    fontSize: "16px",
-                }}
-                onClick={() => navigate("/highscores")}
-            >
-                Save
-            </Button>
+                    }}
+                />
+                <Button
+                    variant="outlined"
+                    sx={{
+                        mb: 1,
+                        width: "180px",
+                        background: "#fff",
+                        color: "#2196f3",
+                        fontSize: "16px",
+                    }}
+                    type="submit"
+                >
+                    Save
+                </Button>
+            </FormControl>
             <Button
                 variant="outlined"
                 sx={{

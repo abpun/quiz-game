@@ -1,15 +1,12 @@
 import React, { useState, useCallback, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import { Box, Typography } from "@mui/material";
 
 const Question = ({
     setScore,
     questionIndex,
     setQuestionIndex,
-    totalQuestion,
     availableQuestions,
 }) => {
-    const navigate = useNavigate();
     const [currentQuestion, setCurrentQuestion] = useState({});
     const [userChoice, setUserChoice] = useState(null);
 
@@ -32,8 +29,6 @@ const Question = ({
         },
         [currentQuestion, setQuestionIndex, setScore]
     );
-
-    if (questionIndex >= totalQuestion) navigate("/gameover");
 
     return (
         <>

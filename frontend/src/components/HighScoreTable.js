@@ -34,31 +34,41 @@ export default function HighScoreTable({ data }) {
                     </TableHead>
 
                     <TableBody>
-                        {!data && data.length && (
-                            <Typography variant="h3">No scores</Typography>
-                        )}
-                        {data?.map((item) => (
-                            <TableRow
-                                key={item._id}
-                                sx={{
-                                    "&:hover": {
-                                        background: "#efefef",
-                                        cursor: "pointer",
-                                    },
-                                }}
-                            >
-                                {columns.map((column) => (
-                                    <TableCell
-                                        key={column.field}
-                                        sx={{
-                                            padding: 1.2,
-                                        }}
+                        {!data || data.length === 0 ? (
+                            <TableRow sx={{ height: 100 }}>
+                                <TableCell colSpan={3}>
+                                    <Typography
+                                        variant="h5"
+                                        sx={{ textAlign: "center" }}
                                     >
-                                        {item[column.field]}
-                                    </TableCell>
-                                ))}
+                                        No scores
+                                    </Typography>
+                                </TableCell>
                             </TableRow>
-                        ))}
+                        ) : (
+                            data?.map((item) => (
+                                <TableRow
+                                    key={item._id}
+                                    sx={{
+                                        "&:hover": {
+                                            background: "#efefef",
+                                            cursor: "pointer",
+                                        },
+                                    }}
+                                >
+                                    {columns.map((column) => (
+                                        <TableCell
+                                            key={column.field}
+                                            sx={{
+                                                padding: 1.2,
+                                            }}
+                                        >
+                                            {item[column.field]}
+                                        </TableCell>
+                                    ))}
+                                </TableRow>
+                            ))
+                        )}
                     </TableBody>
                 </Table>
             </TableContainer>

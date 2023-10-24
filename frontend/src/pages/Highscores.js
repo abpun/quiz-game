@@ -21,7 +21,7 @@ export default function Highscores() {
             .catch((err) => {
                 console.log(err);
             });
-    }, [loading]);
+    }, []);
 
     return (
         <VerticalCenter>
@@ -37,7 +37,6 @@ export default function Highscores() {
             >
                 HighScores
             </Typography>
-
             <HighScoreTable data={data} />
 
             <Button
