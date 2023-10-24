@@ -36,7 +36,7 @@ const Question = ({
     if (questionIndex >= totalQuestion) navigate("/gameover");
 
     return (
-        <>
+        <Box>
             <Typography
                 variant={currentQuestion?.question?.length > 150 ? "h4" : "h3"}
                 sx={{
@@ -93,7 +93,7 @@ const Question = ({
                     </Typography>
                 </Box>
             ))}
-        </>
+        </Box>
     );
 };
 
