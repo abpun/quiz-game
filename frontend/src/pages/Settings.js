@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useForm, Controller } from "react-hook-form";
 import { useSelector } from "react-redux";
-import { Button, FormControl, FormLabel, Typography } from "@mui/material";
+import { FormControl, FormLabel, Typography } from "@mui/material";
 import VerticalCenter from "../layouts/VerticalCenter";
 import SettingsForm from "../components/SettingsForm";
 import CButton from "../components/CButton";
