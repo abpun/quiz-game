@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Button, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import VerticalCenter from "../layouts/VerticalCenter";
 import HighScoreTable from "../components/HighScoreTable";
-import http from "../config/http";
+import CButton from "../components/CButton";
 import { highscoresColumns } from "../config/columns";
+import http from "../config/http";
 
 export default function Highscores() {
     const [loading, setLoading] = useState(false);
@@ -45,19 +46,15 @@ export default function Highscores() {
                 columns={highscoresColumns}
             />
 
-            <Button
-                variant="outlined"
+            <CButton
+                text="Go Home"
                 sx={{
                     mt: 2,
-                    width: "180px",
-                    background: "#fff",
-                    color: "#2196f3",
-                    fontSize: "16px",
                 }}
                 onClick={() => navigate("/")}
             >
                 Go Home
-            </Button>
+            </CButton>
         </VerticalCenter>
     );
 }

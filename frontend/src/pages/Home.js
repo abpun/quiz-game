@@ -1,7 +1,8 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { Button, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import VerticalCenter from "../layouts/VerticalCenter";
+import CButton from "../components/CButton";
 
 export default function Home() {
     const navigate = useNavigate();
@@ -20,44 +21,13 @@ export default function Home() {
             >
                 Digi Quiz
             </Typography>
-            <Button
-                variant="outlined"
-                sx={{
-                    mb: 1,
-                    width: "180px",
-                    background: "#fff",
-                    color: "#2196f3",
-                    fontSize: "16px",
-                }}
-                onClick={() => navigate("/game")}
-            >
-                Play
-            </Button>
-            <Button
-                variant="outlined"
-                sx={{
-                    mb: 1,
-                    width: "180px",
-                    background: "#fff",
-                    color: "#2196f3",
-                    fontSize: "16px",
-                }}
-            >
-                Difficulty
-            </Button>
-            <Button
-                variant="outlined"
-                sx={{
-                    mb: 1,
-                    width: "180px",
-                    background: "#fff",
-                    color: "#2196f3",
-                    fontSize: "16px",
-                }}
+            <CButton text="Play" onClick={() => navigate("/game")} />
+            <CButton text="Difficulty" onClick={() => navigate("/settings")} />
+
+            <CButton
+                text="High Scores"
                 onClick={() => navigate("/highscores")}
-            >
-                High Scores
-            </Button>
+            />
         </VerticalCenter>
     );
 }

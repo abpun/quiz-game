@@ -15,7 +15,7 @@ const Game = () => {
 
     useEffect(() => {
         setLoading(true);
-        http.get("/api/questions")
+        http.get(`/api/questions`)
             .then((res) => {
                 const formattedQuestions = res.data.map((item) => {
                     let answerChoices = [...item.incorrect_answers];

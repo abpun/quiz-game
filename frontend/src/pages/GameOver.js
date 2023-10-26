@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate, useLocation } from "react-router-dom";
-import { Button, FormControl, TextField, Typography } from "@mui/material";
+import { FormControl, TextField, Typography } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
 import VerticalCenter from "../layouts/VerticalCenter";
 import http from "../config/http";
+import CButton from "../components/CButton";
 
 export default function GameOver() {
     const navigate = useNavigate();
@@ -93,32 +94,8 @@ export default function GameOver() {
                     Save
                 </LoadingButton>
             </FormControl>
-            <Button
-                variant="outlined"
-                sx={{
-                    mb: 1,
-                    width: "180px",
-                    background: "#fff",
-                    color: "#2196f3",
-                    fontSize: "16px",
-                }}
-                onClick={() => navigate("/game")}
-            >
-                Play Again
-            </Button>
-            <Button
-                variant="outlined"
-                sx={{
-                    mb: 1,
-                    width: "180px",
-                    background: "#fff",
-                    color: "#2196f3",
-                    fontSize: "16px",
-                }}
-                onClick={() => navigate("/")}
-            >
-                Go Home
-            </Button>
+            <CButton text="Play Again" onClick={() => navigate("/game")} />
+            <CButton text="Go Home" onClick={() => navigate("/")} />
         </VerticalCenter>
     );
 }
