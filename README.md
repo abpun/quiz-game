@@ -56,34 +56,29 @@ Before you begin, ensure you have the following software installed:
     cd digiquiz
     ```
 
-3. There are separate folders for frontend and backend. Again navigate to those folders:
+3. Install dependencies on both folders for frontend and backend:
+   for frontend
 
     ```sh
     cd frontend
-    ```
-
-    also for backend
-
-    ```sh
-    cd backend
-    ```
-
-4. Install dependencies:
-
-    ```sh
     npm install
     ```
 
-    install dependencies separately on both frontend and backend
+    for backend
 
-5. Set up environment variables by creating a .env file in the project root. Define the following variables:
+    ```sh
+    cd backend
+    npm install
+    ```
 
-    # frontend
+4. Set up environment variables by creating a .env file in the project root. Define the following variables:
+
+    ### frontend
 
     - REACT_APP_API_URL= Your server url.
     - REACT_APP_VERSION= Version of React app.
 
-    # backend
+    ### backend
 
     - DB_URL: MongoDB connection string.
     - APP_VERSION: Version of your app(ex. v1).
