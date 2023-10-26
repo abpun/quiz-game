@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate, useLocation } from "react-router-dom";
 import { Button, FormControl, TextField, Typography } from "@mui/material";
+import { LoadingButton } from "@mui/lab";
 import VerticalCenter from "../layouts/VerticalCenter";
 import http from "../config/http";
 
@@ -9,24 +10,34 @@ export default function GameOver() {
     const navigate = useNavigate();
     const location = useLocation();
     const [disabled, setDisabled] = useState(false);
+    const [loading, setLoading] = useState(false);
+
     let score = location.state && location.state.score;
 
     const form = useForm();
     const { register, handleSubmit } = form;
 
     const onSubmit = (data) => {
-        setDisabled(true);
+        setLoading(true);
+
         if (score === null) score = 0;
         data = { ...data, score };
 
         http.post("/api/highscore", data)
             .then((response) => {
                 if (response.status === 200) {
-                    console.log("Score updated");
+                    setTimeout(() => {
+                        setLoading(false);
+                    }, 2000);
+                    setDisabled(true);
+                } else {
+                    setLoading(false);
                 }
             })
             .catch((err) => {
-                console.log(err);
+                setTimeout(() => {
+                    setLoading(false);
+                }, 2000);
             });
     };
 
@@ -69,8 +80,12 @@ export default function GameOver() {
                         },
                     }}
                 />
-                <Button
+                <LoadingButton
+                    type="submit"
                     variant="outlined"
+                    loading={loading}
+                    loadingPosition="start"
+                    disabled={disabled}
                     sx={{
                         mb: 1,
                         width: "180px",
@@ -78,11 +93,9 @@ export default function GameOver() {
                         color: "#2196f3",
                         fontSize: "16px",
                     }}
-                    type="submit"
-                    disabled={disabled}
                 >
                     Save
-                </Button>
+                </LoadingButton>
             </FormControl>
             <Button
                 variant="outlined"

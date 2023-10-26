@@ -11,8 +11,10 @@ const Game = () => {
     const [questionIndex, setQuestionIndex] = useState(0);
     const [questions, setQuestions] = useState([]);
     const [totalQuestion] = useState(5);
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
+        setLoading(true);
         http.get("/api/questions")
             .then((res) => {
                 const formattedQuestions = res.data.map((item) => {
@@ -29,6 +31,9 @@ const Game = () => {
                 });
 
                 setQuestions(formattedQuestions);
+                setTimeout(() => {
+                    setLoading(false);
+                }, 2000);
             })
             .catch((err) => {
                 console.log(err);
@@ -44,6 +49,7 @@ const Game = () => {
                     totalQuestion={totalQuestion}
                 />
                 <Question
+                    loading={loading}
                     setScore={setScore}
                     questionIndex={questionIndex}
                     setQuestionIndex={setQuestionIndex}

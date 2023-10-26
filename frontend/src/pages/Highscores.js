@@ -2,11 +2,12 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button, Typography } from "@mui/material";
 import VerticalCenter from "../layouts/VerticalCenter";
-import http from "../config/http";
 import HighScoreTable from "../components/HighScoreTable";
+import http from "../config/http";
+import { highscoresColumns } from "../config/columns";
 
 export default function Highscores() {
-    const [, setLoading] = useState(false);
+    const [loading, setLoading] = useState(false);
     const [data, setData] = useState([]);
 
     const navigate = useNavigate();
@@ -16,7 +17,9 @@ export default function Highscores() {
         http.get("/api/highscores")
             .then((res) => {
                 setData(res.data);
-                setLoading(false);
+                setTimeout(() => {
+                    setLoading(false);
+                }, 2000);
             })
             .catch((err) => {
                 console.log(err);
@@ -37,7 +40,12 @@ export default function Highscores() {
             >
                 HighScores
             </Typography>
-            <HighScoreTable data={data} />
+
+            <HighScoreTable
+                data={data}
+                loading={loading}
+                columns={highscoresColumns}
+            />
 
             <Button
                 variant="outlined"

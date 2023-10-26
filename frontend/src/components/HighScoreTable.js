@@ -1,5 +1,6 @@
 import React from "react";
 import {
+    Skeleton,
     Table,
     TableBody,
     TableCell,
@@ -8,9 +9,8 @@ import {
     TableRow,
     Typography,
 } from "@mui/material";
-import { highscoresColumns as columns } from "../config/columns";
 
-export default function HighScoreTable({ data }) {
+export default function HighScoreTable({ data, columns, loading }) {
     return (
         <>
             <TableContainer
@@ -39,49 +39,73 @@ export default function HighScoreTable({ data }) {
                             ))}
                         </TableRow>
                     </TableHead>
-
-                    <TableBody>
-                        {!data || data.length === 0 ? (
-                            <TableRow sx={{ height: 100 }}>
-                                <TableCell
-                                    colSpan={3}
-                                    sx={{ background: "#fff" }}
-                                >
-                                    <Typography
-                                        variant="h5"
-                                        sx={{ textAlign: "center" }}
-                                    >
-                                        No scores
-                                    </Typography>
+                    {loading ? (
+                        <TableBody>
+                            <TableRow>
+                                <TableCell colSpan={3}>
+                                    <Skeleton />
                                 </TableCell>
                             </TableRow>
-                        ) : (
-                            data?.map((item, key) => (
-                                <TableRow
-                                    key={item._id}
-                                    sx={{
-                                        "&:hover": {
-                                            background: "#efefef",
-                                            cursor: "pointer",
-                                        },
-                                    }}
-                                >
-                                    {columns.map((column) => (
-                                        <TableCell
-                                            key={column.field}
-                                            sx={{
-                                                padding: 1.2,
-                                            }}
+                            <TableRow>
+                                <TableCell colSpan={3}>
+                                    <Skeleton />
+                                </TableCell>
+                            </TableRow>
+                            <TableRow>
+                                <TableCell colSpan={3}>
+                                    <Skeleton />
+                                </TableCell>
+                            </TableRow>
+                            <TableRow>
+                                <TableCell colSpan={3}>
+                                    <Skeleton />
+                                </TableCell>
+                            </TableRow>
+                        </TableBody>
+                    ) : (
+                        <TableBody>
+                            {!data || data.length === 0 ? (
+                                <TableRow sx={{ height: 100 }}>
+                                    <TableCell
+                                        colSpan={3}
+                                        sx={{ background: "#fff" }}
+                                    >
+                                        <Typography
+                                            variant="h5"
+                                            sx={{ textAlign: "center" }}
                                         >
-                                            {column.field === "_id"
-                                                ? key + 1
-                                                : item[column.field]}
-                                        </TableCell>
-                                    ))}
+                                            No scores
+                                        </Typography>
+                                    </TableCell>
                                 </TableRow>
-                            ))
-                        )}
-                    </TableBody>
+                            ) : (
+                                data?.map((item, key) => (
+                                    <TableRow
+                                        key={item._id}
+                                        sx={{
+                                            "&:hover": {
+                                                background: "#efefef",
+                                                cursor: "pointer",
+                                            },
+                                        }}
+                                    >
+                                        {columns.map((column) => (
+                                            <TableCell
+                                                key={column.field}
+                                                sx={{
+                                                    padding: 1.2,
+                                                }}
+                                            >
+                                                {column.field === "_id"
+                                                    ? key + 1
+                                                    : item[column.field]}
+                                            </TableCell>
+                                        ))}
+                                    </TableRow>
+                                ))
+                            )}
+                        </TableBody>
+                    )}
                 </Table>
             </TableContainer>
             {/* <TablePagination

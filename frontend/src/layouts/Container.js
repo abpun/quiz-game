@@ -6,11 +6,14 @@ export default function Container({ children }) {
         <Box
             component="div"
             sx={{
-                maxWidth: "100%",
-                padding: "0 16px",
                 margin: "24px auto",
+                padding: "0 16px",
+                width: "1000px",
                 "@media (min-width: 600px)": {
                     maxWidth: "600px",
+                },
+                "@media (max-width: 600px)": {
+                    width: "100%",
                 },
                 "@media (min-width: 1200px)": {
                     maxWidth: "1000px",
