@@ -17,9 +17,7 @@ export default function Highscores() {
         http.get("/api/highscores")
             .then((res) => {
                 setData(res.data);
-                setTimeout(() => {
-                    setLoading(false);
-                }, 2000);
+                setLoading(false);
             })
             .catch((err) => {
                 console.log(err);

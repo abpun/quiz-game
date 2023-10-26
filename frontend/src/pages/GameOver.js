@@ -26,18 +26,14 @@ export default function GameOver() {
         http.post("/api/highscore", data)
             .then((response) => {
                 if (response.status === 200) {
-                    setTimeout(() => {
-                        setLoading(false);
-                    }, 2000);
+                    setLoading(false);
                     setDisabled(true);
                 } else {
                     setLoading(false);
                 }
             })
             .catch((err) => {
-                setTimeout(() => {
-                    setLoading(false);
-                }, 2000);
+                setLoading(false);
             });
     };
 
