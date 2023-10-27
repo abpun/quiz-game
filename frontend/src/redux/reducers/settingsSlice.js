@@ -3,15 +3,15 @@ import { createSlice } from "@reduxjs/toolkit";
 export const settingsSlice = createSlice({
     name: "settings",
     initialState: {
-        level: "Navigator 2",
-        difficulty: "hard",
+        level: "Explorer 2",
+        totalQuestion: "5",
     },
     reducers: {
         update: (state, action) => {
-            const { level, difficulty } = action.payload;
+            const { level, totalQuestion } = action.payload;
 
             state.level = level;
-            state.difficulty = difficulty;
+            state.totalQuestion = totalQuestion;
         },
     },
 });

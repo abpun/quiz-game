@@ -22,7 +22,7 @@ export default function Home() {
                 Digi Quiz
             </Typography>
             <CButton text="Play" onClick={() => navigate("/game")} />
-            <CButton text="Difficulty" onClick={() => navigate("/settings")} />
+            <CButton text="Settings" onClick={() => navigate("/settings")} />
 
             <CButton
                 text="High Scores"

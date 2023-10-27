@@ -1,7 +1,8 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useForm, Controller } from "react-hook-form";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { update } from "../redux/reducers/settingsSlice";
 import { FormControl, FormLabel, Typography } from "@mui/material";
 import VerticalCenter from "../layouts/VerticalCenter";
 import SettingsForm from "../components/SettingsForm";
@@ -9,18 +10,20 @@ import CButton from "../components/CButton";
 
 export default function Home() {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
     const settings = useSelector((state) => state.settings);
 
     const form = useForm();
     const { control, handleSubmit, setValue, watch } = form;
 
     useEffect(() => {
-        setValue("difficulty", settings.difficulty);
+        setValue("totalQuestion", settings.totalQuestion);
         setValue("level", settings.level);
     }, [setValue, settings]);
 
     const onSubmit = (data) => {
         console.log(data);
+        dispatch(update(data));
     };
 
     return (
@@ -47,24 +50,24 @@ export default function Home() {
                     alignItems: "center",
                 }}
             >
-                <FormLabel sx={{ my: 1 }}>Difficulty:</FormLabel>
+                <FormLabel sx={{ my: 1 }}>Total Questions:</FormLabel>
                 <Controller
-                    name="difficulty"
+                    name="totalQuestion"
                     control={control}
-                    defaultValue={settings.difficulty}
+                    defaultValue={settings.totalQuestion}
                     render={(props) => (
                         <SettingsForm
                             {...props}
-                            options={["easy", "medium", "hard"]}
+                            options={["5", "10", "15"]}
                             color="primary"
-                            name="difficulty"
+                            name="totalQuestion"
                             watch={watch}
                             setValue={setValue}
                         />
                     )}
                 />
 
-                <FormLabel sx={{ my: 1 }}>Level</FormLabel>
+                <FormLabel sx={{ my: 1 }}>Level:</FormLabel>
                 <Controller
                     name="level"
                     control={control}
@@ -73,7 +76,7 @@ export default function Home() {
                         <SettingsForm
                             {...props}
                             options={[
-                                "Explorer 1",
+                                "Explorer 2",
                                 "Navigator 1",
                                 "Navigator 2",
                             ]}
