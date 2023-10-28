@@ -1,29 +1,41 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useForm, Controller } from "react-hook-form";
 import { useSelector, useDispatch } from "react-redux";
 import { update } from "../redux/reducers/settingsSlice";
 import { FormControl, FormLabel, Typography } from "@mui/material";
+import { Done } from "@mui/icons-material";
 import VerticalCenter from "../layouts/VerticalCenter";
 import SettingsForm from "../components/SettingsForm";
 import CButton from "../components/CButton";
 
 export default function Home() {
+    const [isFormModified, setFormModified] = useState(false);
+    const [isSaved, setIsSaved] = useState(false);
+
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const settings = useSelector((state) => state.settings);
 
     const form = useForm();
-    const { control, handleSubmit, setValue, watch } = form;
+    const { control, handleSubmit, setValue, watch, formState } = form;
 
     useEffect(() => {
         setValue("totalQuestion", settings.totalQuestion);
         setValue("level", settings.level);
     }, [setValue, settings]);
 
+    useEffect(() => {
+        const isModified =
+            watch("totalQuestion") !== settings.totalQuestion ||
+            watch("level") !== settings.level;
+        setFormModified(isModified);
+        if (isModified) setIsSaved(false);
+    }, [formState, watch, settings]);
+
     const onSubmit = (data) => {
-        console.log(data);
         dispatch(update(data));
+        setIsSaved(true);
     };
 
     return (
@@ -87,7 +99,13 @@ export default function Home() {
                         />
                     )}
                 />
-                <CButton text="Save" type="Sumbit" sx={{ mt: 1.5 }} />
+                <CButton
+                    text="Save"
+                    type="Sumbit"
+                    sx={{ mt: 1.5 }}
+                    disabled={!isFormModified}
+                    startIcon={isSaved ? <Done /> : null}
+                />
             </FormControl>
             <CButton text="Go Home" onClick={() => navigate("/")} />
         </VerticalCenter>

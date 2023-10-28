@@ -9,6 +9,7 @@ const Question = ({
     availableQuestions,
 }) => {
     const [currentQuestion, setCurrentQuestion] = useState({});
+    const [isAnswered, setIsAnswered] = useState(false);
     const [userChoice, setUserChoice] = useState(null);
 
     useEffect(() => {
@@ -17,7 +18,9 @@ const Question = ({
 
     const handleAnswerClick = useCallback(
         (index) => {
+            if (isAnswered) return;
             setUserChoice(index);
+            setIsAnswered(true);
 
             if (index === currentQuestion.answer) {
                 setScore((prev) => prev + 10);
@@ -26,9 +29,10 @@ const Question = ({
             setTimeout(() => {
                 setQuestionIndex((prevValue) => prevValue + 1);
                 setUserChoice(null);
+                setIsAnswered(false);
             }, 1000);
         },
-        [currentQuestion, setQuestionIndex, setScore]
+        [currentQuestion, setQuestionIndex, setScore, isAnswered]
     );
 
     return (

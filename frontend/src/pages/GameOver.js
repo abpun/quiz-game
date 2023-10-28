@@ -6,17 +6,20 @@ import { LoadingButton } from "@mui/lab";
 import VerticalCenter from "../layouts/VerticalCenter";
 import http from "../config/http";
 import CButton from "../components/CButton";
+import { Done } from "@mui/icons-material";
 
 export default function GameOver() {
     const navigate = useNavigate();
     const location = useLocation();
     const [disabled, setDisabled] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [isSaved, setIsSaved] = useState(false);
 
     let score = location.state && location.state.score;
 
     const form = useForm();
-    const { register, handleSubmit } = form;
+    const { register, handleSubmit, formState } = form;
+    const { errors } = formState;
 
     const onSubmit = (data) => {
         setLoading(true);
@@ -27,14 +30,19 @@ export default function GameOver() {
         http.post("/api/highscore", data)
             .then((response) => {
                 if (response.status === 200) {
-                    setLoading(false);
-                    setDisabled(true);
+                    setTimeout(() => {
+                        setLoading(false);
+                        setDisabled(true);
+                        setIsSaved(true);
+                    }, 2000);
                 } else {
                     setLoading(false);
+                    setIsSaved(false);
                 }
             })
             .catch((err) => {
                 setLoading(false);
+                setIsSaved(false);
             });
     };
 
@@ -53,27 +61,37 @@ export default function GameOver() {
             </Typography>
             <FormControl component="form" onSubmit={handleSubmit(onSubmit)}>
                 <TextField
+                    id="outlined-error"
                     size="small"
-                    label="username"
-                    variant="outlined"
-                    {...register("name")}
+                    label="Your name"
+                    variant="filled"
+                    error={errors.name}
+                    helperText={errors?.name?.message}
+                    {...register("name", {
+                        required: {
+                            value: true,
+                            message: "Enter this field",
+                        },
+                        pattern: {
+                            value: /^[A-Za-z]{3,}$/,
+                            message: "Invalid name",
+                        },
+                    })}
                     sx={{
-                        width: "180px",
                         mb: 1,
-                        background: "#fff",
-                        "& .MuiOutlinedInput-root": {
-                            "& fieldset": {
-                                border: "none",
-                                borderBottom: "3px solid #2196f3",
-                            },
-                            "&:hover fieldset": {
-                                border: "none",
-                                borderBottom: "3px solid #2196f3",
-                            },
-                            "&.Mui-focused fieldset": {
-                                border: "1px solid #2196f3",
-                                borderBottom: "3px solid #2196f3",
-                            },
+                        width: "180px",
+                        borderRadius: "5px",
+                        "& .MuiFilledInput-root": {
+                            background: "#fff",
+                        },
+                        "&:hover .MuiFilledInput-root": {
+                            background: "#fff",
+                        },
+                        "&:not(:focus) .MuiFilledInput-root": {
+                            background: "#fff",
+                        },
+                        "&:focused .MuiFilledInput-root": {
+                            background: "#fff",
                         },
                     }}
                 />
@@ -82,6 +100,7 @@ export default function GameOver() {
                     variant="outlined"
                     loading={loading}
                     loadingPosition="start"
+                    startIcon={isSaved ? <Done /> : null}
                     disabled={disabled}
                     sx={{
                         mb: 1,
@@ -91,7 +110,7 @@ export default function GameOver() {
                         fontSize: "16px",
                     }}
                 >
-                    Save
+                    {isSaved ? "Saved" : "Save"}
                 </LoadingButton>
             </FormControl>
             <CButton text="Play Again" onClick={() => navigate("/game")} />
