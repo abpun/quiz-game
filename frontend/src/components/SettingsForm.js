@@ -1,9 +1,17 @@
 import React from "react";
-import { Button, FormControlLabel, RadioGroup } from "@mui/material";
+import { Button, FormControlLabel, Grid, RadioGroup } from "@mui/material";
 
 const SettingsForm = ({ field, watch, setValue, options, color, name }) => {
     return (
-        <RadioGroup {...field} sx={{ display: "flex", flexDirection: "row" }}>
+        <RadioGroup
+            {...field}
+            sx={{
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "center",
+                alignItems: "center",
+            }}
+        >
             {options.map((option, index) => (
                 <FormControlLabel
                     key={index}
@@ -13,7 +21,10 @@ const SettingsForm = ({ field, watch, setValue, options, color, name }) => {
                         <Button
                             color={color}
                             size="small"
-                            sx={{ borderRadius: "0px" }}
+                            sx={{
+                                borderRadius: "0px",
+                                width: "120px",
+                            }}
                             variant={
                                 watch(name) === option
                                     ? "contained"

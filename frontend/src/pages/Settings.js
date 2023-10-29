@@ -91,6 +91,7 @@ export default function Home() {
                                 "Explorer 2",
                                 "Navigator 1",
                                 "Navigator 2",
+                                "Navigator 3",
                             ]}
                             color="primary"
                             name="level"
