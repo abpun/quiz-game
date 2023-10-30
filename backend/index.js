@@ -12,7 +12,7 @@ mongoose
 const app = express();
 
 const corsOptions = {
-    origin: ["https://gamedigi.vercel.app", "http://localhost:3000", "*"],
+    origin: process.env.ORIGIN,
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
 };
 

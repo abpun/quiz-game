@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, FormControlLabel, Grid, RadioGroup } from "@mui/material";
+import { Button, FormControlLabel, RadioGroup } from "@mui/material";
 
 const SettingsForm = ({ field, watch, setValue, options, color, name }) => {
     return (
