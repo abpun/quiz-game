@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 import { Typography } from "@mui/material";
+import { highscoresColumns } from "../config/columns";
 import VerticalCenter from "../layouts/VerticalCenter";
 import HighScoreTable from "../components/HighScoreTable";
 import CButton from "../components/CButton";
-import { highscoresColumns } from "../config/columns";
 import http from "../config/http";
 
 export default function Highscores() {
@@ -12,10 +13,11 @@ export default function Highscores() {
     const [data, setData] = useState([]);
 
     const navigate = useNavigate();
+    const settings = useSelector((state) => state.settings);
 
     useEffect(() => {
         setLoading(true);
-        http.get("/api/highscores")
+        http.get(`/api/highscores?level=${settings.level}`)
             .then((res) => {
                 setData(res.data);
                 setLoading(false);
@@ -23,7 +25,7 @@ export default function Highscores() {
             .catch((err) => {
                 console.log(err);
             });
-    }, []);
+    }, [settings.level]);
 
     return (
         <VerticalCenter>
@@ -38,6 +40,10 @@ export default function Highscores() {
                 }}
             >
                 HighScores
+            </Typography>
+
+            <Typography variant="h6" sx={{ mb: 1, color: "#555" }}>
+                Highscore: {settings.level}
             </Typography>
 
             <HighScoreTable

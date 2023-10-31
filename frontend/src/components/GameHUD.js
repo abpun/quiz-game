@@ -1,16 +1,19 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Box, LinearProgress, Typography } from "@mui/material";
 
 export default function GameHUD({ score, questionIndex, totalQuestion }) {
     const navigate = useNavigate();
 
+    useEffect(() => {
+        if (questionIndex >= totalQuestion) {
+            navigate("/gameover", { state: { score } });
+        }
+    }, [questionIndex, totalQuestion, score, navigate]);
+
     let progress = Math.ceil(((questionIndex + 1) / totalQuestion) * 100);
     if (questionIndex + 1 > totalQuestion) progress = 100;
 
-    if (questionIndex >= totalQuestion) {
-        navigate("/gameover", { state: { score } });
-    }
     return (
         <>
             <Box

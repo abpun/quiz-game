@@ -2,13 +2,15 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate, useLocation } from "react-router-dom";
 import { FormControl, TextField, Typography } from "@mui/material";
+import { Done } from "@mui/icons-material";
 import { LoadingButton } from "@mui/lab";
+import { useSelector } from "react-redux";
 import VerticalCenter from "../layouts/VerticalCenter";
 import http from "../config/http";
 import CButton from "../components/CButton";
-import { Done } from "@mui/icons-material";
 
 export default function GameOver() {
+    const settings = useSelector((state) => state.settings);
     const navigate = useNavigate();
     const location = useLocation();
     const [disabled, setDisabled] = useState(false);
@@ -25,7 +27,7 @@ export default function GameOver() {
         setLoading(true);
 
         if (score === null) score = 0;
-        data = { ...data, score };
+        data = { ...data, score, level: settings.level };
 
         http.post("/api/highscore", data)
             .then((response) => {

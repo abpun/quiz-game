@@ -101,7 +101,7 @@ export default function Home() {
                     )}
                 />
                 <CButton
-                    text="Save"
+                    text={isSaved ? "Saved" : "save"}
                     type="Sumbit"
                     sx={{ mt: 1.5 }}
                     disabled={!isFormModified}

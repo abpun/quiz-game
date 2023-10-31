@@ -21,6 +21,16 @@ app.use(cors(corsOptions));
 app.use(bodyparser.urlencoded({ extended: false }));
 app.use(bodyparser.json());
 
+const apiKeys = new Set([process.env.API_KEY]);
+
+app.use((req, res, next) => {
+    const apiKey = req.header("x-api-key");
+    if (!apiKeys.has(apiKey)) {
+        return res.status(403).json({ message: "Unauthorized" });
+    }
+    next();
+});
+
 require("./models");
 require("./routes")(app);
 
