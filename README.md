@@ -29,7 +29,7 @@ DigiQuiz is an interactive quiz game designed to challenge your knowledge. It of
 
 ## Demo
 
-Check out the live demo of DigiQuiz [here](https://gamedigi.vercel.app).
+Check out the live demo of DigiQuiz [here](https://digiquiz.vercel.app).
 
 ## Getting Started
 
