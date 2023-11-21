@@ -7,7 +7,7 @@ exports.fetchAll = async (req, res) => {
         const highscores = await Highscore.aggregate([
             { $match: { level } },
             { $sort: { score: -1 } },
-            { $limit: 5 },
+            { $limit: 10 },
         ]);
         res.json(highscores);
     } catch (error) {
