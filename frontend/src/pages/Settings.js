@@ -70,7 +70,7 @@ export default function Home() {
                     render={(props) => (
                         <SettingsForm
                             {...props}
-                            options={["5", "10", "15"]}
+                            options={["5", "10", "20"]}
                             color="primary"
                             name="totalQuestion"
                             watch={watch}
