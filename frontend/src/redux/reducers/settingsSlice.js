@@ -1,19 +1,20 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { loggedInData } from "../../config/authData";
 
 export const settingsSlice = createSlice({
-    name: "settings",
-    initialState: {
-        level: "Explorer 2",
-        totalQuestion: "5",
-    },
-    reducers: {
-        update: (state, action) => {
-            const { level, totalQuestion } = action.payload;
+  name: "settings",
+  initialState: {
+    level: loggedInData?.user?.level || "Explorer 2",
+    totalQuestion: "5",
+  },
+  reducers: {
+    update: (state, action) => {
+      const { level, totalQuestion } = action.payload;
 
-            state.level = level;
-            state.totalQuestion = totalQuestion;
-        },
+      state.level = level;
+      state.totalQuestion = totalQuestion;
     },
+  },
 });
 
 export const { update } = settingsSlice.actions;

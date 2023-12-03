@@ -1,4 +1,5 @@
 module.exports = () => {
-    require("./Question");
-    require("./Highscore");
+  require("./Question");
+  require("./Highscore");
+  require("./Users");
 };
