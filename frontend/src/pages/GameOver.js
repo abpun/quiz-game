@@ -10,113 +10,117 @@ import http from "../config/http";
 import CButton from "../components/CButton";
 
 export default function GameOver() {
-    const settings = useSelector((state) => state.settings);
-    const navigate = useNavigate();
-    const location = useLocation();
-    const [disabled, setDisabled] = useState(false);
-    const [loading, setLoading] = useState(false);
-    const [isSaved, setIsSaved] = useState(false);
+  const settings = useSelector((state) => state.settings);
+  const user = useSelector((state) => state.user);
+  const navigate = useNavigate();
+  const location = useLocation();
+  const [disabled, setDisabled] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [isSaved, setIsSaved] = useState(false);
 
-    let score = location.state && location.state.score;
+  let score = location.state && location.state.score;
 
-    const form = useForm();
-    const { register, handleSubmit, formState } = form;
-    const { errors } = formState;
+  const form = useForm();
+  const { register, handleSubmit, formState } = form;
+  const { errors } = formState;
 
-    const onSubmit = (data) => {
-        setLoading(true);
+  const onSubmit = (data) => {
+    setLoading(true);
 
-        if (score === null) score = 0;
-        data = { ...data, score, level: settings.level };
+    if (score === null) score = 0;
+    data = { ...data, score, level: settings.level };
 
-        http.post("/api/highscore", data)
-            .then((response) => {
-                if (response.status === 200) {
-                    setTimeout(() => {
-                        setLoading(false);
-                        setDisabled(true);
-                        setIsSaved(true);
-                    }, 2000);
-                } else {
-                    setLoading(false);
-                    setIsSaved(false);
-                }
-            })
-            .catch((err) => {
-                setLoading(false);
-                setIsSaved(false);
-            });
-    };
+    http
+      .post("/api/highscore", data)
+      .then((response) => {
+        if (response.status === 200) {
+          setTimeout(() => {
+            setLoading(false);
+            setDisabled(true);
+            setIsSaved(true);
+          }, 2000);
+        } else {
+          setLoading(false);
+          setIsSaved(false);
+        }
+      })
+      .catch((err) => {
+        setLoading(false);
+        setIsSaved(false);
+      });
+  };
 
-    return (
-        <VerticalCenter>
-            <Typography
-                variant="h2"
-                sx={{
-                    textAlign: "center",
-                    fontWeight: "bold",
-                    color: "#2196f3",
-                    mb: 4,
-                }}
-            >
-                Score: {score}
-            </Typography>
-            <FormControl component="form" onSubmit={handleSubmit(onSubmit)}>
-                <TextField
-                    id="outlined-error"
-                    size="small"
-                    label="Your name"
-                    variant="filled"
-                    error={errors.name}
-                    helperText={errors?.name?.message}
-                    {...register("name", {
-                        required: {
-                            value: true,
-                            message: "Enter this field",
-                        },
-                        pattern: {
-                            value: /^[A-Za-z]{3,}$/,
-                            message: "Invalid name",
-                        },
-                    })}
-                    sx={{
-                        mb: 1,
-                        width: "180px",
-                        borderRadius: "5px",
-                        "& .MuiFilledInput-root": {
-                            background: "#fff",
-                        },
-                        "&:hover .MuiFilledInput-root": {
-                            background: "#fff",
-                        },
-                        "&:not(:focus) .MuiFilledInput-root": {
-                            background: "#fff",
-                        },
-                        "&:focused .MuiFilledInput-root": {
-                            background: "#fff",
-                        },
-                    }}
-                />
-                <LoadingButton
-                    type="submit"
-                    variant="outlined"
-                    loading={loading}
-                    loadingPosition="start"
-                    startIcon={isSaved ? <Done /> : null}
-                    disabled={disabled}
-                    sx={{
-                        mb: 1,
-                        width: "180px",
-                        background: "#fff",
-                        color: "#2196f3",
-                        fontSize: "16px",
-                    }}
-                >
-                    {isSaved ? "Saved" : "Save"}
-                </LoadingButton>
-            </FormControl>
-            <CButton text="Play Again" onClick={() => navigate("/game")} />
-            <CButton text="Go Home" onClick={() => navigate("/")} />
-        </VerticalCenter>
-    );
+  return (
+    <VerticalCenter>
+      <Typography
+        variant="h2"
+        sx={{
+          textAlign: "center",
+          fontWeight: "bold",
+          color: "#2196f3",
+          mb: 4,
+        }}
+      >
+        Score: {score}
+      </Typography>
+      <FormControl component="form" onSubmit={handleSubmit(onSubmit)}>
+        <TextField
+          label="Your username"
+          size="small"
+          placeholder="Enter username..."
+          variant="filled"
+          error={errors.name}
+          helperText={errors?.name?.message}
+          value={user?.userDetails?.username}
+          disabled
+          {...register("username", {
+            required: {
+              value: true,
+              message: "Enter this field",
+            },
+            pattern: {
+              value: /^[A-Za-z]{3,}$/,
+              message: "Invalid name",
+            },
+          })}
+          sx={{
+            mb: 1,
+            width: "180px",
+            borderRadius: "5px",
+            "& .MuiFilledInput-root": {
+              background: "#fff",
+            },
+            "&:hover .MuiFilledInput-root": {
+              background: "#fff",
+            },
+            "&:not(:focus) .MuiFilledInput-root": {
+              background: "#fff",
+            },
+            "&:focused .MuiFilledInput-root": {
+              background: "#fff",
+            },
+          }}
+        />
+        <LoadingButton
+          type="submit"
+          variant="outlined"
+          loading={loading}
+          loadingPosition="start"
+          startIcon={isSaved ? <Done /> : null}
+          disabled={disabled}
+          sx={{
+            mb: 1,
+            width: "180px",
+            background: "#fff",
+            color: "#2196f3",
+            fontSize: "16px",
+          }}
+        >
+          {isSaved ? "Saved" : "Save"}
+        </LoadingButton>
+      </FormControl>
+      <CButton text="Play Again" onClick={() => navigate("/game")} />
+      <CButton text="Go Home" onClick={() => navigate("/")} />
+    </VerticalCenter>
+  );
 }
