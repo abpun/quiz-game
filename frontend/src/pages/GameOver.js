@@ -17,7 +17,6 @@ export default function GameOver() {
   const user = useSelector((state) => state.user);
   const navigate = useNavigate();
   const location = useLocation();
-  const [disabled, setDisabled] = useState(false);
   const [loading, setLoading] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
 
@@ -38,11 +37,9 @@ export default function GameOver() {
         setLoading(false);
         if (res.status === 200) {
           toast.success(res.data.message, toastConfig);
-          setDisabled(true);
           setIsSaved(true);
         } else {
-          setLoading(false);
-          setIsSaved(false);
+          toast.success(res.data.message, toastConfig);
         }
       })
       .catch((err) => {
@@ -107,7 +104,6 @@ export default function GameOver() {
           loading={loading}
           loadingPosition="start"
           startIcon={isSaved ? <Done /> : <Save />}
-          disabled={disabled}
           sx={{
             mb: 1,
             width: "180px",
