@@ -14,6 +14,7 @@ import {
 } from "@mui/material";
 import { Lock, LoginOutlined } from "@mui/icons-material";
 import http from "../config/http";
+import { update } from "../redux/reducers/settingsSlice";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -31,6 +32,11 @@ const Login = () => {
             user: res.data?.userDetails,
             token: res.data?.session,
           };
+          const settingsData = {
+            level: res.data?.userDetails?.level,
+            totalQuestion: "5",
+          };
+          dispatch(update(settingsData));
           dispatch(login(userData));
           localStorage.userData = JSON.stringify(userData);
 
