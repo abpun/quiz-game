@@ -17,4 +17,5 @@ const setAuthToken = (token) => {
 // Set initial token if available
 setAuthToken(loggedInData?.token);
 
+export default http;
 export { http, setAuthToken };
