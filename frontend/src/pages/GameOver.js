@@ -77,10 +77,6 @@ export default function GameOver() {
               value: true,
               message: "Enter this field",
             },
-            pattern: {
-              value: /^[A-Za-z]{3,}$/,
-              message: "Invalid name",
-            },
           })}
           sx={{
             mb: 1,
