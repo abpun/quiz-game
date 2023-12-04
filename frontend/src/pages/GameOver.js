@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate, useLocation } from "react-router-dom";
 import { FormControl, TextField, Typography } from "@mui/material";
@@ -20,6 +20,11 @@ export default function GameOver() {
   const location = useLocation();
   const [loading, setLoading] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
+  const [username, setUsername] = useState("");
+
+  useEffect(() => {
+    setUsername(user?.userDetails.username);
+  }, [user.userDetails]);
 
   let score = location.state && location.state.score;
 
