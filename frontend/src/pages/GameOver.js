@@ -27,6 +27,7 @@ export default function GameOver() {
   const { errors } = formState;
 
   const onSubmit = (data) => {
+    console.log(1);
     setLoading(true);
     if (score === null) score = 0;
     data = { ...data, score, level: settings.level };
@@ -35,6 +36,7 @@ export default function GameOver() {
       .post("/api/highscore", data)
       .then((res) => {
         setLoading(false);
+        console.log(2);
         if (res.status === 200) {
           toast.success(res.data.message, toastConfig);
           setIsSaved(true);
