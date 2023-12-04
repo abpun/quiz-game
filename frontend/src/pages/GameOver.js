@@ -2,12 +2,15 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate, useLocation } from "react-router-dom";
 import { FormControl, TextField, Typography } from "@mui/material";
-import { Done } from "@mui/icons-material";
+import { Done, Save } from "@mui/icons-material";
 import { LoadingButton } from "@mui/lab";
 import { useSelector } from "react-redux";
 import VerticalCenter from "../layouts/VerticalCenter";
 import http from "../config/http";
 import CButton from "../components/CButton";
+import { toast } from "react-toastify";
+import { toastConfig } from "../config/toastConfig";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function GameOver() {
   const settings = useSelector((state) => state.settings);
@@ -26,19 +29,17 @@ export default function GameOver() {
 
   const onSubmit = (data) => {
     setLoading(true);
-
     if (score === null) score = 0;
     data = { ...data, score, level: settings.level };
 
     http
       .post("/api/highscore", data)
-      .then((response) => {
-        if (response.status === 200) {
-          setTimeout(() => {
-            setLoading(false);
-            setDisabled(true);
-            setIsSaved(true);
-          }, 2000);
+      .then((res) => {
+        setLoading(false);
+        if (res.status === 200) {
+          toast.success(res.data.message, toastConfig);
+          setDisabled(true);
+          setIsSaved(true);
         } else {
           setLoading(false);
           setIsSaved(false);
@@ -69,10 +70,9 @@ export default function GameOver() {
           size="small"
           placeholder="Enter username..."
           variant="filled"
-          error={errors.name}
+          error={Boolean(errors.name)}
           helperText={errors?.name?.message}
           value={user?.userDetails?.username}
-          disabled
           {...register("username", {
             required: {
               value: true,
@@ -106,7 +106,7 @@ export default function GameOver() {
           variant="outlined"
           loading={loading}
           loadingPosition="start"
-          startIcon={isSaved ? <Done /> : null}
+          startIcon={isSaved ? <Done /> : <Save />}
           disabled={disabled}
           sx={{
             mb: 1,

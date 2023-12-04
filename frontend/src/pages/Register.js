@@ -2,7 +2,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import {
   Avatar,
-  Button,
   FormControl,
   Grid,
   InputLabel,
@@ -12,25 +11,39 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+import { LoadingButton } from "@mui/lab";
 import { AppRegistration, AppRegistrationOutlined } from "@mui/icons-material";
+import { toast } from "react-toastify";
+import { toastConfig } from "../config/toastConfig";
+import "react-toastify/dist/ReactToastify.css";
 import http from "../config/http";
+import { useState } from "react";
 
 const Register = () => {
+  const [loading, setLoading] = useState(false);
+
   const navigate = useNavigate();
   const { register, handleSubmit, formState } = useForm();
 
   const { errors } = formState;
   const onSubmit = (data) => {
+    setLoading(true);
     http
       .post("/api/register", data)
       .then((data) => {
+        setLoading(false);
         if (data.status === 201) {
-          alert(data.data.message);
+          toast.success(data.data.message, toastConfig);
           navigate("/login");
         }
       })
       .catch((err) => {
-        alert(err.response.data.message);
+        setLoading(false);
+        if (!err.response) {
+          toast.error(err.message, toastConfig);
+        } else {
+          toast.error(err.response.data?.message, toastConfig);
+        }
       });
   };
 
@@ -124,15 +137,17 @@ const Register = () => {
             sx={{ mb: 2 }}
           />
         </FormControl>
-        <Button
+        <LoadingButton
           type="submit"
+          loading={loading}
           variant="contained"
+          loadingPosition="start"
           style={{ margin: "8px 0" }}
           startIcon={<AppRegistration />}
           fullWidth
         >
           Register
-        </Button>
+        </LoadingButton>
       </form>
 
       <Typography>

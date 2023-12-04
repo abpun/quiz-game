@@ -13,7 +13,6 @@ export const userSlice = createSlice({
       return action.payload;
     },
     logout: () => {
-      console.log("hello bro");
       return {
         isLoggedIn: false,
         user: {},

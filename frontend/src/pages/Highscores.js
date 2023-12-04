@@ -7,6 +7,9 @@ import VerticalCenter from "../layouts/VerticalCenter";
 import HighScoreTable from "../components/HighScoreTable";
 import CButton from "../components/CButton";
 import http from "../config/http";
+import { toast } from "react-toastify";
+import { toastConfig } from "../config/toastConfig";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function Highscores() {
   const [loading, setLoading] = useState(false);
@@ -35,7 +38,7 @@ export default function Highscores() {
         setLoading(false);
       })
       .catch((err) => {
-        console.log(err);
+        toast.warning(err.response?.data.message, toastConfig);
       });
   }, [settings.level]);
 
@@ -55,7 +58,7 @@ export default function Highscores() {
       </Typography>
 
       <Typography variant="h6" sx={{ mb: 1, color: "#555" }}>
-        Highscore: {settings.level}
+        Level: {settings.level}
       </Typography>
 
       <HighScoreTable data={data} loading={loading} columns={highscoresColumns} />

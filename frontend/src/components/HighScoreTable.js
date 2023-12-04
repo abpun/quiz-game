@@ -29,9 +29,10 @@ export default function HighScoreTable({ data, columns, loading }) {
                   key={column.field}
                   sx={{
                     padding: 1.2,
+                    background: "#555",
                     fontWeight: "600",
-                    background: "#2196f3",
                     color: "#fff",
+                    textAlign: `${column.field === "_id" ? "right" : "left"}`,
                   }}
                 >
                   {column.label}
@@ -88,6 +89,7 @@ export default function HighScoreTable({ data, columns, loading }) {
                         key={column.field}
                         sx={{
                           padding: 1.2,
+                          textAlign: `${column.field === "_id" ? "right" : "left"}`,
                         }}
                       >
                         {column.field === "_id" ? key + 1 : item[column.field]}

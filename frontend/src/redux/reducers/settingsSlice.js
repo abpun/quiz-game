@@ -9,7 +9,6 @@ export const settingsSlice = createSlice({
   },
   reducers: {
     update: (state, action) => {
-      console.log(action.payload);
       const { level, totalQuestion } = action.payload;
 
       state.level = level;
