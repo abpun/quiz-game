@@ -15,7 +15,7 @@ export const userSlice = createSlice({
     logout: () => {
       return {
         isLoggedIn: false,
-        user: {},
+        userDetails: {},
         token: "",
       };
     },

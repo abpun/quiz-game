@@ -30,7 +30,7 @@ const Login = () => {
           toast.info(res.data?.message, toastConfig);
           const userData = {
             isLoggedIn: true,
-            user: res.data?.userDetails,
+            userDetails: res.data?.userDetails,
             token: res.data?.session,
           };
           const settingsData = {

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate, useLocation } from "react-router-dom";
 import { FormControl, TextField, Typography } from "@mui/material";
@@ -15,24 +15,15 @@ import "react-toastify/dist/ReactToastify.css";
 export default function GameOver() {
   const settings = useSelector((state) => state.settings);
   const user = useSelector((state) => state.user);
-  console.log(user);
+
   const navigate = useNavigate();
   const location = useLocation();
   const [loading, setLoading] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
-  const [username, setUsername] = useState("");
-
-  useEffect(() => {
-    setUsername(user?.userDetails.username);
-  }, [user.userDetails]);
 
   let score = location.state && location.state.score;
 
-  const form = useForm({
-    defaultValues: {
-      username: user?.userDetails?.username || "",
-    },
-  });
+  const form = useForm();
   const { register, handleSubmit, formState } = form;
   const { errors } = formState;
 
@@ -77,8 +68,8 @@ export default function GameOver() {
           size="small"
           placeholder="Enter username..."
           variant="filled"
-          error={Boolean(errors.name)}
-          helperText={errors?.name?.message}
+          error={Boolean(errors.username)}
+          helperText={errors?.username?.message}
           value={user?.userDetails?.username}
           {...register("username", {
             required: {
