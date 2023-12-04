@@ -15,6 +15,7 @@ import "react-toastify/dist/ReactToastify.css";
 export default function GameOver() {
   const settings = useSelector((state) => state.settings);
   const user = useSelector((state) => state.user);
+  console.log(user);
   const navigate = useNavigate();
   const location = useLocation();
   const [loading, setLoading] = useState(false);
@@ -22,12 +23,15 @@ export default function GameOver() {
 
   let score = location.state && location.state.score;
 
-  const form = useForm();
+  const form = useForm({
+    defaultValues: {
+      username: user?.userDetails?.username || "",
+    },
+  });
   const { register, handleSubmit, formState } = form;
   const { errors } = formState;
 
   const onSubmit = (data) => {
-    console.log(1);
     setLoading(true);
     if (score === null) score = 0;
     data = { ...data, score, level: settings.level };
@@ -36,7 +40,6 @@ export default function GameOver() {
       .post("/api/highscore", data)
       .then((res) => {
         setLoading(false);
-        console.log(2);
         if (res.status === 200) {
           toast.success(res.data.message, toastConfig);
           setIsSaved(true);
