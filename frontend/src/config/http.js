@@ -1,11 +1,20 @@
-import axios from "axios";
-import { loggedInData } from "./authData";
-
+// axios instance
 const http = axios.create({
   baseURL: `${process.env.REACT_APP_API_URL}/${process.env.REACT_APP_VERSION}`,
-  headers: {
-    Authorization: `Bearer ${loggedInData?.token}`,
-  },
 });
 
-export default http;
+// Function to set Authorization header before each request
+const setAuthToken = (token) => {
+  if (token) {
+    // Apply the token to the Authorization header
+    http.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+  } else {
+    // If no token is provided, remove Authorization header
+    delete http.defaults.headers.common["Authorization"];
+  }
+};
+
+// Set initial token if available
+setAuthToken(loggedInData?.token);
+
+export { http, setAuthToken };
