@@ -1,7 +1,5 @@
 import axios from "axios";
-import { useSelector } from "react-redux";
-
-const user = useSelector((state) => state.user);
+import { loggedInData } from "./authData";
 
 const http = axios.create({
   baseURL: `${process.env.REACT_APP_API_URL}/${process.env.REACT_APP_VERSION}`,
@@ -16,7 +14,7 @@ const setAuthToken = (token) => {
 };
 
 // Set initial token if available
-setAuthToken(user?.token);
+setAuthToken(loggedInData?.token);
 
 export default http;
 export { http, setAuthToken };
