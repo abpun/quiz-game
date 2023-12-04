@@ -3,6 +3,9 @@ import { useNavigate } from "react-router-dom";
 import { Typography } from "@mui/material";
 import { logout } from "../redux/reducers/userSlice";
 import { useDispatch } from "react-redux";
+import { toast } from "react-toastify";
+import { toastConfig } from "../config/toastConfig";
+import "react-toastify/dist/ReactToastify.css";
 import VerticalCenter from "../layouts/VerticalCenter";
 import CButton from "../components/CButton";
 
@@ -13,6 +16,7 @@ export default function Home() {
   const handleLogout = () => {
     dispatch(logout());
     localStorage.removeItem("userData");
+    toast.info("User logged out", toastConfig);
     navigate("/login");
   };
 

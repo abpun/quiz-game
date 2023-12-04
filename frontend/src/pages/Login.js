@@ -1,32 +1,33 @@
+import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { login } from "../redux/reducers/userSlice";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import {
-  Avatar,
-  Button,
-  FormControl,
-  Grid,
-  InputLabel,
-  Paper,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Avatar, FormControl, Grid, InputLabel, Paper, TextField, Typography } from "@mui/material";
 import { Lock, LoginOutlined } from "@mui/icons-material";
-import http from "../config/http";
+import { LoadingButton } from "@mui/lab";
 import { update } from "../redux/reducers/settingsSlice";
+import { toast } from "react-toastify";
+import { toastConfig } from "../config/toastConfig";
+import "react-toastify/dist/ReactToastify.css";
+import http from "../config/http";
 
 const Login = () => {
+  const [loading, setLoading] = useState(false);
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { register, handleSubmit, formState } = useForm();
 
   const { errors } = formState;
   const onSubmit = (data) => {
+    setLoading(true);
     http
       .post("/api/login", data)
       .then((res) => {
         if (res.status === 200) {
+          setLoading(false);
+          toast.info(res.data?.message, toastConfig);
           const userData = {
             isLoggedIn: true,
             user: res.data?.userDetails,
@@ -40,12 +41,16 @@ const Login = () => {
           dispatch(login(userData));
           localStorage.userData = JSON.stringify(userData);
 
-          alert(res.data?.message);
           navigate("/");
         }
       })
       .catch((err) => {
-        alert(err.response.data.message);
+        setLoading(false);
+        if (!err.response) {
+          toast.error(err.message, toastConfig);
+        } else {
+          toast.error(err.response.data?.message, toastConfig);
+        }
       });
   };
 
@@ -78,7 +83,7 @@ const Login = () => {
             })}
             placeholder="Enter User Name"
             variant="outlined"
-            error={errors?.username}
+            error={Boolean(errors?.username)}
             helperText={errors.username?.message}
           />
         </FormControl>
@@ -96,20 +101,22 @@ const Login = () => {
             type="password"
             placeholder="Enter Password"
             variant="outlined"
-            error={errors?.password}
+            error={Boolean(errors?.password)}
             helperText={errors.password?.message}
           />
         </FormControl>
         <FormControl fullWidth>
-          <Button
+          <LoadingButton
             type="submit"
             variant="contained"
+            loading={loading}
+            loadingPosition="start"
             style={{ margin: "8px 0" }}
             startIcon={<LoginOutlined />}
             fullWidth
           >
             Login
-          </Button>
+          </LoadingButton>
         </FormControl>
       </form>
       <Typography sx={{ mb: 3 }}>
