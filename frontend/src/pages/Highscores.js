@@ -12,16 +12,24 @@ import { toastConfig } from "../config/toastConfig";
 import "react-toastify/dist/ReactToastify.css";
 
 export default function Highscores() {
+  const user = useSelector((state) => state.user);
+  const settings = useSelector((state) => state.settings);
+  const navigate = useNavigate();
+
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
 
-  const navigate = useNavigate();
-  const settings = useSelector((state) => state.settings);
-
   useEffect(() => {
     setLoading(true);
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${user.token}`,
+      },
+    };
+
     http
-      .get(`/api/highscores?level=${settings.level}`)
+      .get(`/api/highscores?level=${settings.level}`, config)
       .then((res) => {
         let parsedScore = res.data.map((score) => {
           let scoreData = {
