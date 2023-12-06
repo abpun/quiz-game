@@ -10,6 +10,7 @@ import { update } from "../redux/reducers/settingsSlice";
 import { StyledLink } from "../config/styles";
 import { toast } from "react-toastify";
 import { toastConfig } from "../config/toastConfig";
+import { useTheme } from "@mui/material/styles";
 import "react-toastify/dist/ReactToastify.css";
 import http from "../config/http";
 
@@ -18,9 +19,11 @@ const Login = () => {
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { register, handleSubmit, formState } = useForm();
+  const theme = useTheme();
 
+  const { register, handleSubmit, formState } = useForm();
   const { errors } = formState;
+
   const onSubmit = (data) => {
     setLoading(true);
     http
@@ -62,17 +65,25 @@ const Login = () => {
         padding: "20px",
         width: 380,
         margin: "30px auto",
+        background: theme.palette.secondary.main,
       }}
     >
       <Grid align="center" sx={{ mb: 3 }}>
-        <Avatar style={{ backgroundColor: "#2196f3" }}>
+        <Avatar style={{ background: theme.palette.primary.main }}>
           <Lock />
         </Avatar>
         <Typography variant="h4">Login</Typography>
       </Grid>
       <form onSubmit={handleSubmit(onSubmit)}>
         <FormControl fullWidth sx={{ mb: 2 }}>
-          <InputLabel shrink={true} sx={{ background: "white", px: 1 }}>
+          <InputLabel
+            shrink={true}
+            sx={{
+              background: theme.palette.secondary.main,
+              color: theme.palette.text.primary,
+              px: 1,
+            }}
+          >
             Username
           </InputLabel>
           <TextField
@@ -89,7 +100,14 @@ const Login = () => {
           />
         </FormControl>
         <FormControl fullWidth sx={{ mb: 2 }}>
-          <InputLabel shrink={true} sx={{ background: "white", px: 1 }}>
+          <InputLabel
+            shrink={true}
+            sx={{
+              background: theme.palette.secondary.main,
+              color: theme.palette.text.primary,
+              px: 1,
+            }}
+          >
             Password
           </InputLabel>
           <TextField
@@ -115,22 +133,18 @@ const Login = () => {
             style={{ margin: "8px 0" }}
             startIcon={<LoginOutlined />}
             fullWidth
-            sx={{ background: "#2196f3" }}
+            sx={{ background: theme.palette.primary.main, color: theme.palette.text.secondary }}
           >
             Login
           </LoadingButton>
         </FormControl>
       </form>
       <Typography sx={{ mb: 3 }}>
-        <StyledLink href="#" style={{ color: "#2196f3" }}>
-          Forget Password
-        </StyledLink>
+        <StyledLink href="#">Forget Password</StyledLink>
       </Typography>
       <Typography>
         Not a user?&nbsp;
-        <StyledLink to="/register" style={{ color: "#2196f3" }}>
-          Create Account
-        </StyledLink>
+        <StyledLink to="/register">Create Account</StyledLink>
       </Typography>
     </Paper>
   );

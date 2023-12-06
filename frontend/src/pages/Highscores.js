@@ -9,12 +9,14 @@ import CButton from "../components/CButton";
 import http from "../config/http";
 import { toast } from "react-toastify";
 import { toastConfig } from "../config/toastConfig";
+import { useTheme } from "@mui/material";
 import "react-toastify/dist/ReactToastify.css";
 
 export default function Highscores() {
   const user = useSelector((state) => state.user);
   const settings = useSelector((state) => state.settings);
   const navigate = useNavigate();
+  const theme = useTheme();
 
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState([]);
@@ -59,13 +61,13 @@ export default function Highscores() {
           fontWeight: "bold",
           textAlign: "center",
           width: "300px",
-          color: "#2196f3",
+          color: theme.palette.text.main,
         }}
       >
         HighScores
       </Typography>
 
-      <Typography variant="h6" sx={{ mb: 1, color: "#555" }}>
+      <Typography variant="h6" sx={{ mb: 1, color: theme.palette.text.secondary }}>
         Level: {settings.level}
       </Typography>
 

@@ -9,15 +9,18 @@ import {
   TableRow,
   Typography,
 } from "@mui/material";
+import { useTheme } from "@mui/material";
 
 export default function HighScoreTable({ data, columns, loading }) {
+  const theme = useTheme();
+
   return (
     <>
       <TableContainer
         sx={{
           maxHeight: 260,
           width: "300px",
-          background: "#fff",
+          background: theme.palette.secondary.main,
           border: "1px solid #efefef",
         }}
       >
@@ -29,7 +32,7 @@ export default function HighScoreTable({ data, columns, loading }) {
                   key={column.field}
                   sx={{
                     padding: 1.2,
-                    background: "#555",
+                    background: theme.palette.primary.main,
                     fontWeight: "600",
                     color: "#fff",
                     textAlign: `${column.field === "_id" ? "right" : "left"}`,
@@ -67,7 +70,7 @@ export default function HighScoreTable({ data, columns, loading }) {
             <TableBody>
               {!data || data.length === 0 ? (
                 <TableRow sx={{ height: 100 }}>
-                  <TableCell colSpan={3} sx={{ background: "#fff" }}>
+                  <TableCell colSpan={3} sx={{ background: theme.palette.secondary.main }}>
                     <Typography variant="h5" sx={{ textAlign: "center" }}>
                       No scores
                     </Typography>
@@ -79,7 +82,7 @@ export default function HighScoreTable({ data, columns, loading }) {
                     key={item._id}
                     sx={{
                       "&:hover": {
-                        background: "#efefef",
+                        background: theme.palette.secondary.dark,
                         cursor: "pointer",
                       },
                     }}
@@ -88,6 +91,7 @@ export default function HighScoreTable({ data, columns, loading }) {
                       <TableCell
                         key={column.field}
                         sx={{
+                          color: theme.palette.text.secondary,
                           padding: 1.2,
                           textAlign: `${column.field === "_id" ? "right" : "left"}`,
                         }}

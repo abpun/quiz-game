@@ -4,6 +4,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { FormControl, TextField, Typography } from "@mui/material";
 import { Done, Save } from "@mui/icons-material";
 import { LoadingButton } from "@mui/lab";
+import { useTheme } from "@mui/material";
 import { useSelector } from "react-redux";
 import VerticalCenter from "../layouts/VerticalCenter";
 import http from "../config/http";
@@ -18,6 +19,8 @@ export default function GameOver() {
 
   const navigate = useNavigate();
   const location = useLocation();
+  const theme = useTheme();
+
   const [loading, setLoading] = useState(false);
   const [isSaved, setIsSaved] = useState(false);
 
@@ -56,7 +59,7 @@ export default function GameOver() {
         sx={{
           textAlign: "center",
           fontWeight: "bold",
-          color: "#2196f3",
+          color: theme.palette.primary.main,
           mb: 4,
         }}
       >
@@ -82,16 +85,16 @@ export default function GameOver() {
             width: "180px",
             borderRadius: "5px",
             "& .MuiFilledInput-root": {
-              background: "#fff",
+              background: theme.palette.secondary.main,
             },
             "&:hover .MuiFilledInput-root": {
-              background: "#fff",
+              background: theme.palette.secondary.main,
             },
             "&:not(:focus) .MuiFilledInput-root": {
-              background: "#fff",
+              background: theme.palette.secondary.main,
             },
             "&:focused .MuiFilledInput-root": {
-              background: "#fff",
+              background: theme.palette.secondary.main,
             },
           }}
         />
@@ -104,8 +107,8 @@ export default function GameOver() {
           sx={{
             mb: 1,
             width: "180px",
-            background: "#fff",
-            color: "#2196f3",
+            background: theme.palette.secondary.main,
+            color: theme.palette.text.primary,
             fontSize: "16px",
           }}
         >

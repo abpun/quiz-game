@@ -12,6 +12,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
 import { LoadingButton } from "@mui/lab";
 import { AppRegistration, AppRegistrationOutlined } from "@mui/icons-material";
 import { StyledLink } from "../config/styles";
@@ -24,8 +25,9 @@ const Register = () => {
   const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
-  const { register, handleSubmit, formState } = useForm();
+  const theme = useTheme();
 
+  const { register, handleSubmit, formState } = useForm();
   const { errors } = formState;
   const onSubmit = (data) => {
     setLoading(true);
@@ -55,10 +57,11 @@ const Register = () => {
         padding: "20px",
         width: 380,
         margin: "30px auto",
+        background: theme.palette.secondary.main,
       }}
     >
       <Grid align="center" sx={{ mb: 3 }}>
-        <Avatar style={{ backgroundColor: "#2196f3" }}>
+        <Avatar sx={{ background: theme.palette.primary.main }}>
           <AppRegistrationOutlined />
         </Avatar>
         <Typography variant="h4">Register</Typography>
@@ -66,7 +69,14 @@ const Register = () => {
 
       <form onSubmit={handleSubmit(onSubmit)}>
         <FormControl fullWidth>
-          <InputLabel shrink={true} sx={{ background: "white", px: 0.75 }}>
+          <InputLabel
+            shrink={true}
+            sx={{
+              background: theme.palette.secondary.main,
+              color: theme.palette.text.primary,
+              px: 0.75,
+            }}
+          >
             Name
           </InputLabel>
           <TextField
@@ -85,7 +95,15 @@ const Register = () => {
         </FormControl>
 
         <FormControl fullWidth>
-          <InputLabel shrink={true} sx={{ background: "white", px: 0.75, ml: -0.5 }}>
+          <InputLabel
+            shrink={true}
+            sx={{
+              background: theme.palette.secondary.main,
+              color: theme.palette.text.primary,
+              px: 0.75,
+              ml: -0.5,
+            }}
+          >
             Username
           </InputLabel>
           <TextField
@@ -104,7 +122,9 @@ const Register = () => {
         </FormControl>
 
         <FormControl fullWidth>
-          <InputLabel shrink={true}>Level</InputLabel>
+          <InputLabel shrink={true} sx={{ color: theme.palette.text.primary }}>
+            Level
+          </InputLabel>
           <Select
             {...register("level")}
             defaultValue="Explorer 2"
@@ -120,7 +140,15 @@ const Register = () => {
         </FormControl>
 
         <FormControl fullWidth>
-          <InputLabel shrink={true} sx={{ background: "white", px: 0.75, ml: -0.5 }}>
+          <InputLabel
+            shrink={true}
+            sx={{
+              background: theme.palette.secondary.main,
+              color: theme.palette.text.primary,
+              px: 0.75,
+              ml: -0.5,
+            }}
+          >
             Password
           </InputLabel>
           <TextField
@@ -146,7 +174,7 @@ const Register = () => {
           style={{ margin: "8px 0" }}
           startIcon={<AppRegistration />}
           fullWidth
-          sx={{ background: "#2196f3" }}
+          sx={{ background: theme.palette.primary.main }}
         >
           Register
         </LoadingButton>
@@ -154,9 +182,7 @@ const Register = () => {
 
       <Typography>
         Already a user&nbsp;
-        <StyledLink to="/login" style={{ color: "#2196f3" }}>
-          Login
-        </StyledLink>
+        <StyledLink to="/login">Login</StyledLink>
       </Typography>
     </Paper>
   );

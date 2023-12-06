@@ -5,11 +5,13 @@ import { logout } from "../redux/reducers/userSlice";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import { toastConfig } from "../config/toastConfig";
+import { useTheme } from "@mui/material";
 import "react-toastify/dist/ReactToastify.css";
 import VerticalCenter from "../layouts/VerticalCenter";
 import CButton from "../components/CButton";
 
 export default function Home() {
+  const theme = useTheme();
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -29,7 +31,7 @@ export default function Home() {
           fontWeight: "bold",
           textAlign: "center",
           width: "300px",
-          color: "#2196f3",
+          color: theme.palette.primary.main,
         }}
       >
         Digi Quiz

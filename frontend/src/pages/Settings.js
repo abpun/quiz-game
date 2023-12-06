@@ -7,6 +7,7 @@ import { FormControl, FormLabel, Typography } from "@mui/material";
 import { Done } from "@mui/icons-material";
 import { toast } from "react-toastify";
 import { toastConfig } from "../config/toastConfig";
+import { useTheme } from "@mui/material";
 import "react-toastify/dist/ReactToastify.css";
 import VerticalCenter from "../layouts/VerticalCenter";
 import SettingsForm from "../components/SettingsForm";
@@ -18,6 +19,7 @@ export default function Home() {
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const theme = useTheme();
   const settings = useSelector((state) => state.settings);
 
   const form = useForm();
@@ -50,7 +52,7 @@ export default function Home() {
           fontWeight: "bold",
           textAlign: "center",
           width: "300px",
-          color: "#2196f3",
+          color: theme.palette.primary.main,
         }}
       >
         Settings
