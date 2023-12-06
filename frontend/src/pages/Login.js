@@ -1,12 +1,13 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { login } from "../redux/reducers/userSlice";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { Avatar, FormControl, Grid, InputLabel, Paper, TextField, Typography } from "@mui/material";
 import { Lock, LoginOutlined } from "@mui/icons-material";
 import { LoadingButton } from "@mui/lab";
 import { update } from "../redux/reducers/settingsSlice";
+import { StyledLink } from "../config/styles";
 import { toast } from "react-toastify";
 import { toastConfig } from "../config/toastConfig";
 import "react-toastify/dist/ReactToastify.css";
@@ -64,7 +65,7 @@ const Login = () => {
       }}
     >
       <Grid align="center" sx={{ mb: 3 }}>
-        <Avatar style={{ backgroundColor: "#6499E9" }}>
+        <Avatar style={{ backgroundColor: "#2196f3" }}>
           <Lock />
         </Avatar>
         <Typography variant="h4">Login</Typography>
@@ -114,19 +115,22 @@ const Login = () => {
             style={{ margin: "8px 0" }}
             startIcon={<LoginOutlined />}
             fullWidth
+            sx={{ background: "#2196f3" }}
           >
             Login
           </LoadingButton>
         </FormControl>
       </form>
       <Typography sx={{ mb: 3 }}>
-        <Link href="#" style={{ textDecoration: "none" }}>
+        <StyledLink href="#" style={{ color: "#2196f3" }}>
           Forget Password
-        </Link>
+        </StyledLink>
       </Typography>
       <Typography>
         Not a user?&nbsp;
-        <Link to="/register">Create Account</Link>
+        <StyledLink to="/register" style={{ color: "#2196f3" }}>
+          Create Account
+        </StyledLink>
       </Typography>
     </Paper>
   );

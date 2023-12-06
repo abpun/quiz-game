@@ -48,7 +48,7 @@ export default function Highscores() {
       .catch((err) => {
         toast.warning(err.response?.data.message, toastConfig);
       });
-  }, [settings.level]);
+  }, [settings.level, user.token]);
 
   return (
     <VerticalCenter>

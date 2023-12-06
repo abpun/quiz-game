@@ -1,4 +1,5 @@
-import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import {
   Avatar,
@@ -13,11 +14,11 @@ import {
 } from "@mui/material";
 import { LoadingButton } from "@mui/lab";
 import { AppRegistration, AppRegistrationOutlined } from "@mui/icons-material";
+import { StyledLink } from "../config/styles";
 import { toast } from "react-toastify";
 import { toastConfig } from "../config/toastConfig";
 import "react-toastify/dist/ReactToastify.css";
 import http from "../config/http";
-import { useState } from "react";
 
 const Register = () => {
   const [loading, setLoading] = useState(false);
@@ -57,7 +58,7 @@ const Register = () => {
       }}
     >
       <Grid align="center" sx={{ mb: 3 }}>
-        <Avatar style={{ backgroundColor: "#6499E9" }}>
+        <Avatar style={{ backgroundColor: "#2196f3" }}>
           <AppRegistrationOutlined />
         </Avatar>
         <Typography variant="h4">Register</Typography>
@@ -145,6 +146,7 @@ const Register = () => {
           style={{ margin: "8px 0" }}
           startIcon={<AppRegistration />}
           fullWidth
+          sx={{ background: "#2196f3" }}
         >
           Register
         </LoadingButton>
@@ -152,7 +154,9 @@ const Register = () => {
 
       <Typography>
         Already a user&nbsp;
-        <Link to="/login">Login</Link>
+        <StyledLink to="/login" style={{ color: "#2196f3" }}>
+          Login
+        </StyledLink>
       </Typography>
     </Paper>
   );
