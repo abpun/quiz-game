@@ -5,7 +5,7 @@ export const userSlice = createSlice({
   name: "user",
   initialState: {
     isLoggedIn: loggedInData?.isLoggedIn || false,
-    userDetails: loggedInData?.user || {},
+    userDetails: loggedInData?.userDetails || {},
     token: loggedInData?.token || "",
   },
   reducers: {
