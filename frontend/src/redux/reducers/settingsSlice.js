@@ -4,7 +4,7 @@ import { loggedInData } from "../../config/authData";
 export const settingsSlice = createSlice({
   name: "settings",
   initialState: {
-    level: loggedInData?.user?.level || "Explorer 2",
+    level: loggedInData?.userDetails?.level || "Explorer 2",
     totalQuestion: "5",
   },
   reducers: {
