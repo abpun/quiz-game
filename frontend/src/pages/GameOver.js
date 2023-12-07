@@ -35,8 +35,16 @@ export default function GameOver() {
     if (score === null) score = 0;
     data = { ...data, score, level: settings.level };
 
+    const config = {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${user.token}`,
+      },
+    };
+
+
     http
-      .post("/api/highscore", data)
+      .post("/api/highscore", data, config)
       .then((res) => {
         setLoading(false);
         if (res.status === 200) {
