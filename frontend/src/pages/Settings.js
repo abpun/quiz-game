@@ -21,6 +21,7 @@ export default function Home() {
   const dispatch = useDispatch();
   const theme = useTheme();
   const settings = useSelector((state) => state.settings);
+  const user = useSelector((state) => state.user);
 
   const form = useForm();
   const { control, handleSubmit, setValue, watch, formState } = form;
@@ -88,7 +89,7 @@ export default function Home() {
         <Controller
           name="level"
           control={control}
-          defaultValue={settings.level}
+          defaultValue={user?.userDetails?.level}
           render={(props) => (
             <SettingsForm
               {...props}
