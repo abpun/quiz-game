@@ -73,7 +73,7 @@ const Register = () => {
             shrink={true}
             sx={{
               background: theme.palette.secondary.main,
-              color: theme.palette.text.primary,
+              color: theme.palette.text.secondary,
               px: 0.75,
             }}
           >
@@ -99,7 +99,7 @@ const Register = () => {
             shrink={true}
             sx={{
               background: theme.palette.secondary.main,
-              color: theme.palette.text.primary,
+              color: theme.palette.text.secondary,
               px: 0.75,
               ml: -0.5,
             }}
@@ -122,7 +122,7 @@ const Register = () => {
         </FormControl>
 
         <FormControl fullWidth>
-          <InputLabel shrink={true} sx={{ color: theme.palette.text.primary }}>
+          <InputLabel shrink={true} sx={{ color: theme.palette.text.secondary }}>
             Level
           </InputLabel>
           <Select
@@ -144,7 +144,7 @@ const Register = () => {
             shrink={true}
             sx={{
               background: theme.palette.secondary.main,
-              color: theme.palette.text.primary,
+              color: theme.palette.text.secondary,
               px: 0.75,
               ml: -0.5,
             }}
