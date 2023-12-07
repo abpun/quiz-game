@@ -80,7 +80,7 @@ const Login = () => {
             shrink={true}
             sx={{
               background: theme.palette.secondary.main,
-              color: theme.palette.text.primary,
+              color: theme.palette.text.secondary,
               px: 1,
             }}
           >
@@ -104,7 +104,7 @@ const Login = () => {
             shrink={true}
             sx={{
               background: theme.palette.secondary.main,
-              color: theme.palette.text.primary,
+              color: theme.palette.text.secondary,
               px: 1,
             }}
           >
@@ -133,7 +133,7 @@ const Login = () => {
             style={{ margin: "8px 0" }}
             startIcon={<LoginOutlined />}
             fullWidth
-            sx={{ background: theme.palette.primary.main, color: theme.palette.text.secondary }}
+            sx={{ background: theme.palette.primary.main, color: theme.palette.secondary.main}}
           >
             Login
           </LoadingButton>
